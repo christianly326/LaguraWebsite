@@ -1,5 +1,7 @@
 /* Custom css styles */
-
+*{
+    outline: 2px solid red;
+}
 .custom-btn {
     background-color: #426B1F;
     color: white;
@@ -22,8 +24,14 @@
     text-decoration: none; 
     font-size: 80%;
     justify-content: centre;
+
 }
 
+.navbar{
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 .exchange-section {
     position: relative;
     min-height: 80vh;
@@ -164,7 +172,7 @@ input[type="number"].no-spinners {
     width: fit-content;
     font-size: 10vh;
     position: absolute;
-    left: 45%;
+    left: 43%;
     top: 25%;
 
 }
@@ -196,4 +204,66 @@ input[type="number"].no-spinners {
 .revealUp {
   opacity: 0;
   visibility: hidden;
+}
+
+.aboutUs{
+    min-height: 20vh;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    padding: 2.5%;
+    position: relative;
+}
+
+.title{
+    width: fit-content;
+    position: absolute;
+    top: 5%;
+    left: 10%;
+}
+.title:after{
+    content: "";
+    animation: typeWriter 3s linear 1;
+    animation-fill-mode: forwards;
+}
+.aboutUs p{
+    width: 45%;
+    margin-left: auto;
+    margin-right: 7.5%;
+
+}
+@keyframes typeWriter{
+    0%{
+        content: "A";
+    }
+    12.5%{
+        content: "AB";
+    }
+    25%{
+        content: "ABO";
+    }
+    37.5%{
+        content: "ABOU";
+    }
+    50%{
+        content: "ABOUT";
+    }
+    62.5%{
+        content: "ABOUTT";
+    }
+    75%{
+        content: "ABOUT";
+    }
+    87.5%{
+        content: "ABOUT U";
+    }
+    100%{
+        content: "ABOUT US";
+    }
+}
+
+.aboutUs img{
+    position: absolute;
+    bottom: 40%;
+    top: 25%;
+    left: 7%;
 }

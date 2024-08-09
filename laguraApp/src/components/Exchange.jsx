@@ -51,7 +51,6 @@ function Exchange() {
 
     useEffect(() => {
         fetchConversionRate();
-        
     }, [currency]);
 
     useEffect(() => {
@@ -67,12 +66,11 @@ function Exchange() {
               onLeaveBack: () => gsap.to(elem, { autoAlpha: 0 })
             });
           });
-      
           // Clean up function
           return () => {
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
           };
-    })
+    }, []);
 
     const handleExchange = () => {
         if (rate !== null) {

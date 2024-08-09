@@ -5,14 +5,16 @@ import './App.css';
 import './styles.css';
 import Navbar from './components/Navbar';
 import Exchange from './components/Exchange';
-import AnimatedHeader from './components/Practice';
+import AnimatedTitle from './components/Practice';
+import AboutUs from './components/AboutUs';
 function App() {
 
   return (
     <>
     <Navbar />
     <Exchange />
-    <AnimatedHeader />
+    <AboutUs/>
+    <AnimatedTitle />
     </>
   );
 }
