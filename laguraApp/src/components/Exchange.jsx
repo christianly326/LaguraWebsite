@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 function Exchange() {
-
     const [currency, setCurrency] = useState({ from: "Euro", to: "Peso", fromSymbol: "€", toSymbol: "₱" });
     const [amount, setAmount] = useState("");
     const [convertedAmount, setConvertedAmount] = useState("");
@@ -11,17 +10,18 @@ function Exchange() {
 
     const fetchConversionRate = async () => {
         // Caching the response to save on API requests as we are limited to a small fixed amount each month
-        const cacheKey = `${currency.from}_to_${currency.to}` 
+        const cacheKey = `${currency.from}_to_${currency.to}`;
         const cached = localStorage.getItem(cacheKey);
-        if (cached){
-            const cachedData = json.parse(cached);
-            const now = new Date().getTime();
+        if (cached) {
+            const cachedData = JSON.parse(cached);
+            const now = Date.now();
             const cacheAge = now - cachedData.timestamp;
-            if (cacheAge < 10800000) {// if the cache age is less than 3 hours then we can use it
+            if (cacheAge < 10800000) { // if the cache age is less than 3 hours then we can use it
                 setRate(cachedData.rate);
                 setLoading(false);
                 return;
             }
+        }
 
         try {
             const url = `https://v6.exchangerate-api.com/v6/5cf5eb39026b945374800887/latest/${currency.from === "Euro" ? "EUR" : "PHP"}`;
@@ -34,9 +34,9 @@ function Exchange() {
             localStorage.setItem(cacheKey, JSON.stringify({
                 rate: newRate,
                 timestamp: Date.now()
-            }))
-            setRate(newRate)
-            setLoading(false)
+            }));
+            setRate(newRate);
+            setLoading(false);
         } catch (error) {
             setError(`Failed to fetch the conversion rate: ${error}`);
             setLoading(false);
@@ -55,6 +55,7 @@ function Exchange() {
             alert('Fetching conversion rate, please try again.');
         }
     };
+
     const flipExchange = () => {
         setCurrency(prev => ({
             from: prev.to,
@@ -82,7 +83,7 @@ function Exchange() {
                     <span className="currency-symbol">€</span>
                 </div>
                 <div className="btn-flip mt-4">
-                    <button className="btn" onClick={flipExchange} style={{fontSize:"20px"}}>↕</button>                
+                    <button className="btn" onClick={flipExchange} style={{ fontSize: "20px" }}>↕</button>
                 </div>
                 <label className="currency-title mt-2">{currency.to}</label>
                 <span className="ml-3">|</span>
@@ -97,8 +98,7 @@ function Exchange() {
                     <span className="currency-symbol">₱</span>
                 </div>
 
-
-                <button 
+                <button
                     className="btn btn-success btn-hover mt-4"
                     onClick={handleExchange}
                     disabled={loading}
