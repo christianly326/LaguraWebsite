@@ -1,0 +1,141 @@
+/* Custom css styles */
+* {
+    outline: 1px solid red;
+  }
+
+.custom-btn {
+    background-color: #426B1F;
+    color: white;
+    border: none;
+    font-size: 80%;
+}
+
+.btn-hover:hover {
+    transform: scale(1.05); 
+    
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: white;
+    color: black;
+    border-color: #ccc;
+  }
+
+.nav-link-custom {
+    text-align: center;
+    padding: 10px;
+    text-decoration: none; 
+    font-size: 80%;
+    justify-content: centre;
+}
+
+.exchange-section {
+    position: relative;
+    min-height: 80vh;
+    background: url('images/islandForBiggerScreens.png') no-repeat center center / cover; 
+}
+
+.overlay  {
+    position: absolute;
+    min-height: 70%;  
+    min-width: 30%;
+    top: 10%;
+    bottom:10%;        
+    left: 10%;
+    padding: 5vh;
+    background-color: rgba(255, 255, 255,    0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 600px) {
+    .exchange-section {
+        background: url(images/island.png) no-repeat center center / cover;
+        min-height: 30vh;
+    }
+}
+
+
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.small-input {
+    width: 80%; 
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-top: 2%;
+}
+
+.btn-success {
+    width: 100%;
+    padding: 10px;
+    background-color: #426B1F;
+}
+
+
+input[type="number"].no-spinners::-webkit-inner-spin-button,
+input[type="number"].no-spinners::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"].no-spinners {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+/* For Edge and IE11, if needed */
+input[type="number"].no-spinners::-ms-clear,
+input[type="number"].no-spinners::-ms-reveal {
+    display: none;
+}
+
+/* Generic rule to ensure the spinner does not appear on any browser */
+input[type="number"].no-spinners {
+    appearance: none; /* Standard property for future compatibility */
+}
+
+.currency-title{
+    width: auto;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-radius: 4px;      /* To match input styling */
+}
+
+.input-wrapper input {
+    flex-grow: 1;
+    border: none;
+    border-radius: 5px;
+    padding-right: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+    transition: box-shadow 0.3s ease-in-out; 
+}
+
+.focus:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
+    transform: scale(1.05); 
+    transition: box-shadow 0.5s ease, transform 0.3s ease;
+}
+
+
+.currency-symbol {
+    position: absolute;
+    left: 90%;
+}
+
+.input-wrapper:focus-within .currency-symbol {
+    transform: translate(100%, 0%) scale(1.25); /* Example transformation */
+    transition: transform 0.5s ease;
+
+}
+
+
+
+.btn-flip {
+    padding-left: 45%;
+}
