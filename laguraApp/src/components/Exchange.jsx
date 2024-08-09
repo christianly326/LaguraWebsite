@@ -10,6 +10,19 @@ function Exchange() {
     const [error, setError] = useState(null);
 
     const fetchConversionRate = async () => {
+        // Caching the response to save on API requests as we are limited to a small fixed amount each month
+        const cacheKey = `${currency.from}_to_${currency.to}` 
+        const cached = localStorage.getItem(cacheKey);
+        if (cached){
+            const cachedData = json.parse(cached);
+            const now = new Date().getTime();
+            const cacheAge = now - cachedData.timestamp;
+            if (cacheAge < 10800000) {// if the cache age is less than 3 hours then we can use it
+                setRate(cachedData.rate);
+                setLoading(false);
+                return;
+            }
+
         try {
             const url = `https://v6.exchangerate-api.com/v6/5cf5eb39026b945374800887/latest/${currency.from === "Euro" ? "EUR" : "PHP"}`;
             const response = await fetch(url);
@@ -18,8 +31,12 @@ function Exchange() {
             }
             const data = await response.json();
             const newRate = currency.from === "Euro" ? data.conversion_rates.PHP : data.conversion_rates.EUR;
-            setRate(newRate);
-            setLoading(false);
+            localStorage.setItem(cacheKey, JSON.stringify({
+                rate: newRate,
+                timestamp: Date.now()
+            }))
+            setRate(newRate)
+            setLoading(false)
         } catch (error) {
             setError(`Failed to fetch the conversion rate: ${error}`);
             setLoading(false);
