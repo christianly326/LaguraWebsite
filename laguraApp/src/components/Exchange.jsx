@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowsUpDown } from "@fortawesome/free-solid-svg-icons";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+gsap.registerPlugin(ScrollTrigger);
 function Exchange() {
     const [currency, setCurrency] = useState({ from: "Euro", to: "Peso", fromSymbol: "€", toSymbol: "₱" });
     const [amount, setAmount] = useState("");
@@ -7,6 +12,7 @@ function Exchange() {
     const [rate, setRate] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [animate, setAnimate] = useState(false); // animation variable for onclick animation
 
     const fetchConversionRate = async () => {
         // Caching the response to save on API requests as we are limited to a small fixed amount each month
@@ -45,7 +51,28 @@ function Exchange() {
 
     useEffect(() => {
         fetchConversionRate();
+        
     }, [currency]);
+
+    useEffect(() => {
+        // Code Referenced from "https://wpdean.com/css-text-animation/" - Up And Down we Go!
+        gsap.utils.toArray(".revealUp").forEach(function(elem) {
+            ScrollTrigger.create({
+              trigger: elem,
+              start: "top 80%",
+              end: "bottom 20%",
+              onEnter: () => gsap.fromTo(elem, { y: 100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, ease: "back", duration: 1.25 }),
+              onLeave: () => gsap.to(elem, { autoAlpha: 0 }),
+              onEnterBack: () => gsap.fromTo(elem, { y: -100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, ease: "back", duration: 1.25 }),
+              onLeaveBack: () => gsap.to(elem, { autoAlpha: 0 })
+            });
+          });
+      
+          // Clean up function
+          return () => {
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+          };
+    })
 
     const handleExchange = () => {
         if (rate !== null) {
@@ -65,6 +92,12 @@ function Exchange() {
         }));
         setAmount("");
         setConvertedAmount("");
+        setAnimate(true);
+
+        // Reset animation
+        setTimeout(() => {
+            setAnimate(false);
+        }, 500); // Duration of the animation
     };
 
     return (
@@ -83,17 +116,23 @@ function Exchange() {
                     <span className="currency-symbol">€</span>
                 </div>
                 <div className="btn-flip mt-4">
-                    <button className="btn" onClick={flipExchange} style={{ fontSize: "20px" }}>↕</button>
+                    <FontAwesomeIcon
+                    icon={faArrowsUpDown}
+                    onClick={flipExchange}
+                    className={`icon-arrow ${animate ? 'icon-animate' : ''}`} // if animate is set to true include the icon-animate class to create a onclick animation
+                    />
                 </div>
                 <label className="currency-title mt-2">{currency.to}</label>
                 <span className="ml-3">|</span>
                 <div className="input-wrapper">
                     <input
                         type="number"
-                        className="form-control small-input no-spinners focus"
+                        className="form-control small-input no-spinners"
                         value={convertedAmount}
                         readOnly
                         placeholder="0.00"
+                        tabIndex="-1"
+                        disabled={true}
                     />
                     <span className="currency-symbol">₱</span>
                 </div>
@@ -107,6 +146,7 @@ function Exchange() {
                 </button>
                 {error && <p className="text-danger">{error}</p>}
             </div>
+            <p className="sendTitle hide-on-phones revealUp">Send money to Phillipines <br></br>today</p>
         </div>
     );
 }

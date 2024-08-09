@@ -5,12 +5,14 @@ import './App.css';
 import './styles.css';
 import Navbar from './components/Navbar';
 import Exchange from './components/Exchange';
+import AnimatedHeader from './components/Practice';
 function App() {
 
   return (
     <>
     <Navbar />
     <Exchange />
+    <AnimatedHeader />
     </>
   );
 }
